@@ -57,14 +57,21 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
     [answer]
   );
 
-  const handleWrongAnswer = useCallback(() => {
-    setIncorrect(incorrect + 1);
-    setAnswer('');
-    setShake(true);
-    setTimeout(() => {
-      setShake(false);
-    }, SHAKE_TIME);
-  }, [incorrect]);
+  const handleWrongAnswer = useCallback(
+    (clearAnswer: boolean) => () => {
+      setIncorrect(incorrect + 1);
+
+      if (clearAnswer) {
+        setAnswer('');
+      }
+
+      setShake(true);
+      setTimeout(() => {
+        setShake(false);
+      }, SHAKE_TIME);
+    },
+    [incorrect]
+  );
 
   const handleOnEnter = useCallback(() => {
     if (!nextQuestion || answer.length === 0) {
@@ -89,7 +96,7 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
       setTimePaused(false);
       setHasFailedQuestion(false);
     } else {
-      handleWrongAnswer();
+      handleWrongAnswer(true);
       setTimePaused(true);
       if (!hasFailedQuestion) {
         if (nextQuestionId + 1 >= questions.length) {
@@ -115,14 +122,14 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
     questions
   ]);
 
-  const handleOnClear = useCallback(() => {
+  const handleOnBackspace = useCallback(() => {
     if (answer.length === 0) {
       return;
     }
 
-    setAnswer('');
+    setAnswer(answer.substring(0, answer.length - 1));
     setShake(false);
-  }, [answer.length]);
+  }, [answer]);
 
   const hasMoreLevels = useMemo(
     () => section in LEVELS && levelIndex < LEVELS[section].length - 1,
@@ -194,7 +201,7 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
             startTime={startTime}
             timeToAnswer={TIME_TO_ANSWER}
             paused={timePaused}
-            onTimeUp={handleWrongAnswer}
+            onTimeUp={handleWrongAnswer(false)}
           />
           <Box sx={{ position: 'absolute', top: 20, display: 'flex', flexDirection: 'row', gap: 1 }}>
             <IncorrectMarker incorrect={incorrect >= 1} />
@@ -204,7 +211,9 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
         </>
       ) : null}
       {topDisplay}
-      {nextQuestion ? <Keyboard onClick={handleOnClick} onEnter={handleOnEnter} onClear={handleOnClear} /> : null}
+      {nextQuestion ? (
+        <Keyboard onClick={handleOnClick} onEnter={handleOnEnter} onBackspace={handleOnBackspace} />
+      ) : null}
     </>
   );
 };
