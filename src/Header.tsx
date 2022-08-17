@@ -56,8 +56,8 @@ const Header = () => {
               <ListItem
                 button
                 key="addition"
-                selected={pathname === '/addition' || pathname.startsWith('/addition')}
-                onClick={() => navigate('/addition')}
+                selected={pathname === '/levels/addition' || pathname.startsWith('/levels/addition')}
+                onClick={() => navigate('/levels/addition')}
               >
                 <ListItemIcon>
                   <AddIcon />

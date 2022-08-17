@@ -11,6 +11,7 @@ import IncorrectMarker from './components/IncorrectMarker';
 import TimeProgressBar from './components/TimeProgressBar';
 import { useAppDispatch } from '../store/hooks';
 import { updateScore } from '../store/slices/scores';
+import LEVELS from './levels';
 
 const MAX_ANSWER_LENGTH = 4;
 const MAX_INCORRECT_ANSWERS = 3;
@@ -109,6 +110,11 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
     setShake(false);
   }, [answer.length]);
 
+  const hasMoreLevels = useMemo(
+    () => section in LEVELS && levelIndex < LEVELS[section].length - 1,
+    [levelIndex, section]
+  );
+
   const handleOnNext = useCallback(() => {
     setAnswer('');
     setIncorrect(0);
@@ -123,8 +129,25 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
     }
 
     setQuestions([]);
-    navigate(`/level/${section}/${levelIndex + 1}`);
-  }, [incorrect, level.questions, levelIndex, navigate, section]);
+
+    if (hasMoreLevels) {
+      navigate(`/levels/${section}/${levelIndex + 1}`);
+    } else {
+      navigate(`/levels/${section}`);
+    }
+  }, [hasMoreLevels, incorrect, level.questions, levelIndex, navigate, section]);
+
+  const onNextButtonText = useMemo(() => {
+    if (incorrect >= MAX_INCORRECT_ANSWERS) {
+      return 'Try Again';
+    }
+
+    if (!hasMoreLevels) {
+      return 'Main Menu';
+    }
+
+    return 'Next Level';
+  }, [hasMoreLevels, incorrect]);
 
   const topDisplay = useMemo(() => {
     if (!nextQuestion) {
@@ -133,20 +156,20 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
           sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}
         >
           <Typography variant="h4" sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-            Level {incorrect >= MAX_INCORRECT_ANSWERS ? 'failed' : 'completed'}
+            Level {incorrect >= MAX_INCORRECT_ANSWERS ? 'Failed' : 'Completed'}
           </Typography>
           <Typography variant="subtitle1" sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
             ({incorrect} wrong answers)
           </Typography>
-          <Button onClick={handleOnNext} color="secondary" variant="contained" sx={{ mt: 2 }} size="large">
-            {incorrect >= MAX_INCORRECT_ANSWERS ? 'Try Again' : 'Next Level'}
+          <Button onClick={handleOnNext} color="primary" variant="contained" sx={{ mt: 2 }} size="large">
+            {onNextButtonText}
           </Button>
         </Box>
       );
     }
 
     return <QuestionView question={nextQuestion} answer={answer} shake={shake} />;
-  }, [answer, handleOnNext, incorrect, nextQuestion, shake]);
+  }, [answer, handleOnNext, incorrect, nextQuestion, onNextButtonText, shake]);
 
   return (
     <>

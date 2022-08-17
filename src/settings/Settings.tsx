@@ -29,7 +29,7 @@ const Settings = () => {
     <>
       <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', m: 2 }}>
         <Button color="error" onClick={handleOnReset} size="large" variant="contained">
-          Reset progress
+          Reset Progress
         </Button>
       </Box>
       <Dialog
@@ -38,7 +38,7 @@ const Settings = () => {
         aria-labelledby="restting-progress-title"
         aria-describedby="restting-progress-description"
       >
-        <DialogTitle id="restting-progress-title">Reset progress</DialogTitle>
+        <DialogTitle id="restting-progress-title">Reset Progress</DialogTitle>
         <DialogContent>
           <DialogContentText id="restting-progress-description">
             Are you sure you want to reset all progress?
@@ -49,7 +49,7 @@ const Settings = () => {
             Cancel
           </Button>
           <Button onClick={handleOnResetConfirm} color="error">
-            Reset progress
+            Reset Progress
           </Button>
         </DialogActions>
       </Dialog>

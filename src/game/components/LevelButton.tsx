@@ -18,7 +18,7 @@ const LevelButton = ({ section, index, name }: LevelButtonProps) => {
   const levelScore = useAppSelector(useMemo(() => selectScoreByLevelId(level?.id), [level]));
 
   const handleOnClick = useCallback(() => {
-    navigate(`/level/${section}/${index}`);
+    navigate(`/levels/${section}/${index}`);
   }, [index, navigate, section]);
 
   const color = useMemo(() => {
