@@ -19,11 +19,16 @@ export const ScoresSlice = createSlice({
   reducers: {
     updateScore: (state, action: PayloadAction<LevelScore>) => {
       return { ...state, scoresByLevelId: { ...state.scoresByLevelId, [action.payload.levelId]: action.payload } };
+    },
+    clearScores: () => {
+      return {
+        scoresByLevelId: {}
+      };
     }
   }
 });
 
-export const { updateScore } = ScoresSlice.actions;
+export const { updateScore, clearScores } = ScoresSlice.actions;
 
 export const selectScoreByLevelIds = (state: RootState) => state.scores.scoresByLevelId;
 export const selectScoreByLevelId = (levelId: string | undefined) => (state: RootState) =>

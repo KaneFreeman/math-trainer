@@ -10,8 +10,10 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
 import './Header.css';
 
 const Header = () => {
@@ -44,7 +46,12 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-          <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+          <Box
+            sx={{ width: 250, height: '100%', display: 'flex', flexDirection: 'column' }}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
+          >
             <List disablePadding>
               <ListItem
                 button
@@ -56,6 +63,21 @@ const Header = () => {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Addition" />
+              </ListItem>
+            </List>
+            <Box sx={{ flexGrow: 1 }} />
+            <Divider />
+            <List disablePadding>
+              <ListItem
+                button
+                key="settings"
+                selected={pathname === '/settings' || pathname.startsWith('/settings')}
+                onClick={() => navigate('/settings')}
+              >
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
               </ListItem>
             </List>
           </Box>
