@@ -3,16 +3,12 @@ import { ReactNode, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-interface CommonKeyboardButtonProps {
-  fullWidth?: boolean;
-}
-
-interface KeyboardButtonProps extends CommonKeyboardButtonProps {
+interface KeyboardButtonProps {
   value: ReactNode;
   onClick: () => void;
 }
 
-interface KeyboardButtonPropsWithValue extends CommonKeyboardButtonProps {
+interface KeyboardButtonPropsWithValue {
   value: string | number;
   onClick: (value: string | number) => void;
 }
@@ -23,7 +19,7 @@ function hasValue(props: KeyboardButtonProps | KeyboardButtonPropsWithValue): pr
 }
 
 const KeyboardButton = (props: KeyboardButtonProps | KeyboardButtonPropsWithValue) => {
-  const { value, fullWidth = false } = props;
+  const { value } = props;
   const handleOnClick = useCallback(() => {
     if (hasValue(props)) {
       props.onClick(props.value);
@@ -35,7 +31,7 @@ const KeyboardButton = (props: KeyboardButtonProps | KeyboardButtonPropsWithValu
   return (
     <Button
       sx={{
-        width: fullWidth ? '100%' : 64,
+        width: '100%',
         height: 50,
         display: 'flex',
         alignItems: 'center',

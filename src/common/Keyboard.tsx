@@ -41,8 +41,8 @@ const Keyboard = ({ onClick, onEnter, onBackspace }: KeyboardProps) => {
         <KeyboardButton value={0} onClick={handleOnClick} />
       </Box>
       <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 3fr', justifyContent: 'center', gap: 1 }}>
-        <KeyboardButton value={<KeyboardDoubleArrowLeftIcon fontSize="large" />} onClick={onBackspace} fullWidth />
-        <KeyboardButton value={<KeyboardReturnIcon fontSize="large" />} onClick={onEnter} fullWidth />
+        <KeyboardButton value={<KeyboardDoubleArrowLeftIcon fontSize="large" />} onClick={onBackspace} />
+        <KeyboardButton value={<KeyboardReturnIcon fontSize="large" />} onClick={onEnter} />
       </Box>
     </Box>
   );
