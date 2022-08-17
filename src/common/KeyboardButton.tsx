@@ -35,7 +35,7 @@ const KeyboardButton = (props: KeyboardButtonProps | KeyboardButtonPropsWithValu
   return (
     <Button
       sx={{
-        width: fullWidth ? '100%' : 80,
+        width: fullWidth ? '100%' : 64,
         height: 50,
         display: 'flex',
         alignItems: 'center',
