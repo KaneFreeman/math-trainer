@@ -12,6 +12,7 @@ import TimeProgressBar from './components/TimeProgressBar';
 import { useAppDispatch } from '../store/hooks';
 import { updateScore } from '../store/slices/scores';
 import LEVELS from './levels';
+import { randomIntFromInterval } from '../utility/number.util';
 
 const MAX_ANSWER_LENGTH = 4;
 const MAX_INCORRECT_ANSWERS = 3;
@@ -34,6 +35,7 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
   const [startTime, setStartTime] = useState(Date.now());
   const [timePaused, setTimePaused] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [hasFailedQuestion, setHasFailedQuestion] = useState(false);
 
   useEffect(() => {
     setQuestions(shuffle(level.questions));
@@ -85,20 +87,32 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
       setAnswer('');
       setStartTime(Date.now());
       setTimePaused(false);
+      setHasFailedQuestion(false);
     } else {
       handleWrongAnswer();
       setTimePaused(true);
+      if (!hasFailedQuestion) {
+        if (nextQuestionId + 1 >= questions.length) {
+          setQuestions([...questions, nextQuestion]);
+        } else {
+          const newQuestions = [...questions];
+          newQuestions.splice(randomIntFromInterval(nextQuestionId + 1, questions.length - 1), 0, nextQuestion);
+          setQuestions(newQuestions);
+        }
+      }
+      setHasFailedQuestion(true);
     }
   }, [
     answer,
     dispatch,
     handleWrongAnswer,
+    hasFailedQuestion,
     incorrect,
     level.id,
     level.questions.length,
     nextQuestion,
     nextQuestionId,
-    questions.length
+    questions
   ]);
 
   const handleOnClear = useCallback(() => {
@@ -122,6 +136,7 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
     setShake(false);
     setStartTime(Date.now());
     setTimePaused(false);
+    setHasFailedQuestion(false);
 
     if (incorrect >= MAX_INCORRECT_ANSWERS) {
       setQuestions(shuffle(level.questions));
