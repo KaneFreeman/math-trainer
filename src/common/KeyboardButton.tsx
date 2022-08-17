@@ -32,7 +32,7 @@ const KeyboardButton = (props: KeyboardButtonProps | KeyboardButtonPropsWithValu
     <Button
       sx={{
         width: 80,
-        height: 80,
+        height: 50,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
