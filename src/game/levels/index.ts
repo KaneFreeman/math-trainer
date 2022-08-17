@@ -1,9 +1,11 @@
 /* eslint-disable no-param-reassign */
-import { Level } from '../../interface';
+import { ADDITION, Level, SUBTRACTION } from '../../interface';
 import ADDITION_LEVELS from './addition';
+import SUBTRACTION_LEVELS from './subtraction';
 
 const LEVELS: Record<string, Level[]> = {
-  addition: ADDITION_LEVELS
+  [ADDITION]: ADDITION_LEVELS,
+  [SUBTRACTION]: SUBTRACTION_LEVELS,
 };
 
 export default LEVELS;

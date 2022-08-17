@@ -30,7 +30,13 @@ const LevelButton = ({ section, index, name }: LevelButtonProps) => {
   }, [levelScore]);
 
   return (
-    <Button onClick={handleOnClick} variant={levelScore ? 'contained' : 'outlined'} color={color} size="large">
+    <Button
+      onClick={handleOnClick}
+      variant={levelScore ? 'contained' : 'outlined'}
+      color={color}
+      size="large"
+      sx={{ pl: 1, pr: 1, flexGrow: 1 }}
+    >
       {name}
     </Button>
   );

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,8 +12,10 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { toTitleCase } from './utility/string.util';
 import './Header.css';
 
 const Header = () => {
@@ -34,6 +36,10 @@ const Header = () => {
     },
     []
   );
+
+  const section = useMemo(() => {
+    return pathname.startsWith('/levels/') ? pathname.replace(/\/levels\/([a-zA-Z0-9]+)([/]{1}[a-zA-Z0-9]+)*/g, '$1') : undefined;
+  }, [pathname]);
 
   return (
     <AppBar className="app-header" position="fixed" sx={{ top: 0 }}>
@@ -64,6 +70,17 @@ const Header = () => {
                 </ListItemIcon>
                 <ListItemText primary="Addition" />
               </ListItem>
+              <ListItem
+                button
+                key="subtraction"
+                selected={pathname === '/levels/subtraction' || pathname.startsWith('/levels/subtraction')}
+                onClick={() => navigate('/levels/subtraction')}
+              >
+                <ListItemIcon>
+                  <RemoveIcon />
+                </ListItemIcon>
+                <ListItemText primary="Subtraction" />
+              </ListItem>
             </List>
             <Box sx={{ flexGrow: 1 }} />
             <Divider />
@@ -93,7 +110,7 @@ const Header = () => {
             overflow: 'hidden'
           }}
         >
-          Math Trainer
+          {section ? toTitleCase(section) : 'Math Trainer'}
         </Typography>
       </Toolbar>
     </AppBar>

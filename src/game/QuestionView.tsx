@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import Box from '@mui/material/Box';
-import { ADDITION, Question } from '../interface';
-import AdditionQuestionView from './questions/AdditionQuestionView';
+import { ADDITION, DIVISION, MULTIPLICATION, Question, SUBTRACTION } from '../interface';
+import BasicMathQuestionView from './questions/BasicMathQuestionView';
 import './QuestionView.css';
 
 interface QuestionViewProps {
@@ -14,7 +14,10 @@ const QuestionView = memo(({ question, answer, shake }: QuestionViewProps) => {
   const renderedQuestion = useMemo(() => {
     switch (question.type) {
       case ADDITION:
-        return <AdditionQuestionView question={question} answer={answer} />;
+      case SUBTRACTION:
+      case MULTIPLICATION:
+      case DIVISION:
+        return <BasicMathQuestionView question={question} answer={answer} />;
       default:
         return null;
     }

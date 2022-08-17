@@ -15,8 +15,8 @@ const SectionView = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', m: 2 }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1 }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', m: 2, width: '100%' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, width: '100%' }}>
         {levels.map((level, index) => (
           <LevelButton key={`${section}-level-${index}`} section={section} index={index} name={level.name} />
         ))}
