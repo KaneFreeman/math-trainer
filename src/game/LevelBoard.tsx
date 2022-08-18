@@ -19,13 +19,13 @@ const MAX_INCORRECT_ANSWERS = 3;
 const SHAKE_TIME = 300;
 const TIME_TO_ANSWER = 5000;
 
-interface BoardProps {
+interface LevelBoardProps {
   section: string;
   levelIndex: number;
   level: Level;
 }
 
-const Board = ({ section, levelIndex, level }: BoardProps) => {
+const LevelBoard = ({ section, levelIndex, level }: LevelBoardProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -132,7 +132,7 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
   }, [answer]);
 
   const hasMoreLevels = useMemo(
-    () => section in LEVELS && levelIndex < LEVELS[section].length - 1,
+    () => section in LEVELS && levelIndex < LEVELS[section].levels.length - 1,
     [levelIndex, section]
   );
 
@@ -218,4 +218,4 @@ const Board = ({ section, levelIndex, level }: BoardProps) => {
   );
 };
 
-export default Board;
+export default LevelBoard;

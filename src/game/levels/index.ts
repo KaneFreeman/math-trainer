@@ -3,9 +3,20 @@ import { ADDITION, Level, SUBTRACTION } from '../../interface';
 import ADDITION_LEVELS from './addition';
 import SUBTRACTION_LEVELS from './subtraction';
 
-const LEVELS: Record<string, Level[]> = {
-  [ADDITION]: ADDITION_LEVELS,
-  [SUBTRACTION]: SUBTRACTION_LEVELS,
+export interface Levels {
+  levels: Level[];
+  hasOneMinuteChallenge: boolean;
+}
+
+const LEVELS: Record<string, Levels> = {
+  [ADDITION]: {
+    levels: ADDITION_LEVELS,
+    hasOneMinuteChallenge: true
+  },
+  [SUBTRACTION]: {
+    levels: SUBTRACTION_LEVELS,
+    hasOneMinuteChallenge: false
+  }
 };
 
 export default LEVELS;

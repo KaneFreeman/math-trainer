@@ -8,10 +8,10 @@ export default function useLevel(section: string | undefined, index: number): Le
       return null;
     }
 
-    if (LEVELS[section].length <= index || index < 0) {
+    if (LEVELS[section].levels.length <= index || index < 0) {
       return null;
     }
 
-    return LEVELS[section][index];
+    return LEVELS[section].levels[index];
   }, [index, section]);
 }

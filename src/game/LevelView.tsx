@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import useLevelIndex from './hooks/useLevelIndex';
 import useLevel from './hooks/useLevel';
-import Board from './Board';
+import LevelBoard from './LevelBoard';
 
 const LevelView = () => {
   const { section, levelId } = useParams();
@@ -34,7 +34,7 @@ const LevelView = () => {
         overflow: 'hidden'
       }}
     >
-      <Board section={section} levelIndex={levelIndex} level={level} />
+      <LevelBoard section={section} levelIndex={levelIndex} level={level} />
     </Box>
   );
 };

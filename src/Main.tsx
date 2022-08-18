@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { ADDITION } from './interface';
 import Header from './Header';
 import SectionView from './game/section/SectionView';
+import ChallengeView from './game/ChallengeView';
 import LevelView from './game/LevelView';
 import Settings from './settings/Settings';
 
@@ -33,6 +34,7 @@ const Main = () => {
             <Route path="/" element={<Navigate to={`/levels/${ADDITION}`} replace />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/levels/:section" element={<SectionView />} />
+            <Route path="/levels/:section/challenge" element={<ChallengeView />} />
             <Route path="/levels/:section/:levelId" element={<LevelView />} />
           </Routes>
         </Box>

@@ -5,7 +5,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 interface TimeProgressBarProps {
   startTime: number;
   timeToAnswer: number;
-  paused: boolean;
+  paused?: boolean;
   onTimeUp: () => void;
 }
 
@@ -23,7 +23,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   }
 }));
 
-const TimeProgressBar = ({ startTime, timeToAnswer, paused, onTimeUp }: TimeProgressBarProps) => {
+const TimeProgressBar = ({ startTime, timeToAnswer, paused = false, onTimeUp }: TimeProgressBarProps) => {
   const [progress, setProgress] = useState(0.0);
 
   const calculateProgress = useCallback(() => {
