@@ -23,7 +23,10 @@ const Keyboard = ({ onClick, onEnter, onBackspace }: KeyboardProps) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 1
+        gap: 1,
+        width: '100%',
+        padding: '0 16px',
+        boxSizing: 'border-box'
       }}
     >
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 1 }}>

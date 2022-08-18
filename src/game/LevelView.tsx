@@ -28,9 +28,10 @@ const LevelView = () => {
         alignItems: 'center',
         justifyContent: 'center',
         pt: 2,
-        pb: 4,
+        pb: 2,
         boxSizing: 'border-box',
-        position: 'relative'
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
       <Board section={section} levelIndex={levelIndex} level={level} />
