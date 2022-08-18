@@ -4,6 +4,10 @@ import { randomIntFromInterval } from './number.util';
 const FULL_RANGE_CHANGE = 0.5;
 const LEVEL_INCREMENT = 4;
 
+const LOWER_LEVEL_MAX = 9;
+const LOWER_LEVEL_CUTOFF = 5;
+const UPPER_LEVEL_MAX = 15;
+
 function generateAdditionQuestion(level: number): BasicMathQuestion {
   let min = 0 + level * LEVEL_INCREMENT;
   if (Math.random() < FULL_RANGE_CHANGE) {
@@ -13,7 +17,10 @@ function generateAdditionQuestion(level: number): BasicMathQuestion {
   const max = LEVEL_INCREMENT + level * LEVEL_INCREMENT;
 
   const firstNumber = randomIntFromInterval(min, max);
-  const secondNumber = randomIntFromInterval(0, Math.min(9, max));
+  const secondNumber = randomIntFromInterval(
+    0,
+    Math.min(level < LOWER_LEVEL_CUTOFF ? LOWER_LEVEL_MAX : UPPER_LEVEL_MAX, max)
+  );
 
   if (Math.random() < 0.5) {
     return {
@@ -40,4 +47,8 @@ export function generateQuestion(type: QuestionType, level: number): Question | 
     default:
       return null;
   }
+}
+
+export function questionsAreEqual(a: Question, b: Question | null): boolean {
+  return a.a === b?.a && a.b === b?.b && a.answer === b?.answer && a.type === b?.type;
 }

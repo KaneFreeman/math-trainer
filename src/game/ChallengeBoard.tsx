@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { Question, QuestionType } from '../interface';
 import Keyboard from '../common/Keyboard';
 // import { useAppDispatch } from '../store/hooks';
-import { generateQuestion } from '../utility/question.util';
+import { generateQuestion, questionsAreEqual } from '../utility/question.util';
 import TimeProgressBar from './components/TimeProgressBar';
 import QuestionView from './QuestionView';
 
@@ -28,11 +28,19 @@ const ChallengeBoard = memo(({ section, difficultyLevel }: ChallengeBoardProps) 
   const [timeUp, setTimeUp] = useState(false);
 
   const generateNextQuestion = useCallback(
-    () => generateQuestion(section, difficultyLevel),
+    (oldQuestion: Question | null) => {
+      let newQuestion: Question | null;
+
+      do {
+        newQuestion = generateQuestion(section, difficultyLevel);
+      } while (newQuestion !== null && questionsAreEqual(newQuestion, oldQuestion));
+
+      return newQuestion;
+    },
     [difficultyLevel, section]
   );
 
-  const [nextQuestion, setNextQuestion] = useState<Question | null>(() => generateNextQuestion());
+  const [nextQuestion, setNextQuestion] = useState<Question | null>(() => generateNextQuestion(null));
 
   const handleOnClick = useCallback(
     (value: string | number) => {
@@ -59,7 +67,7 @@ const ChallengeBoard = memo(({ section, difficultyLevel }: ChallengeBoardProps) 
 
     if (+answer === nextQuestion.answer) {
       setAnswer('');
-      setNextQuestion(generateNextQuestion());
+      setNextQuestion(generateNextQuestion(nextQuestion));
       setCorrect(correct + 1);
     } else {
       handleWrongAnswer();
@@ -77,7 +85,7 @@ const ChallengeBoard = memo(({ section, difficultyLevel }: ChallengeBoardProps) 
 
   const handleTryAgain = useCallback(() => {
     setAnswer('');
-    setNextQuestion(generateNextQuestion());
+    setNextQuestion(generateNextQuestion(null));
     setShake(false);
     setStartTime(Date.now());
     setTimeUp(false);
