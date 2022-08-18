@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import Box from '@mui/material/Box';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import { MAX_APP_WIDTH } from '../interface';
 import KeyboardButton from './KeyboardButton';
 
 interface KeyboardProps {
@@ -25,6 +26,7 @@ const Keyboard = ({ onClick, onEnter, onBackspace }: KeyboardProps) => {
         flexDirection: 'column',
         gap: 1,
         width: '100%',
+        maxWidth: MAX_APP_WIDTH,
         padding: '0 16px',
         boxSizing: 'border-box'
       }}

@@ -1,3 +1,5 @@
+export const MAX_APP_WIDTH = 400;
+
 export const ADDITION = 'addition';
 export const SUBTRACTION = 'subtraction';
 export const MULTIPLICATION = 'multiplication';
